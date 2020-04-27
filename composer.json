@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "marqant-lab/marqant-pay": "~0.0.1",
         "nuwave/lighthouse": "^4.12",
         "haydenpierce/class-finder": "^0.4.2"
     },
