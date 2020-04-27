@@ -1,5 +1,5 @@
 {
-    "name": "marqant/marqant-pay-graphql",
+    "name": "marqant-lab/marqant-pay-graphql",
     "description": "GraphQL provider for marqant/marqant-pay package.",
     "type": "package",
     "license": "MIT",
