@@ -1,1 +1,1 @@
-# Marqant Pay GraphQL
+# A GraphQL Endpoint for the Marqant Pay Package

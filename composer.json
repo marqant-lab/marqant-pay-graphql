@@ -1,0 +1,28 @@
+{
+    "name": "marqant-lab/marqant-pay-graphql",
+    "description": "GraphQL provider for marqant/marqant-pay package.",
+    "type": "package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmytro Sydorenko",
+            "email": "dmytro@du.digital"
+        }
+    ],
+    "require": {
+        "nuwave/lighthouse": "^4.12",
+        "haydenpierce/class-finder": "^0.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marqant\\MarqantPayGraphQL\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Marqant\\MarqantPayGraphQL\\MarqantPayGraphQLServiceProvider"
+            ]
+        }
+    }
+}
