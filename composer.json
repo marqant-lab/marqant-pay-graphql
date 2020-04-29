@@ -15,6 +15,7 @@
     },
     "autoload": {
         "psr-4": {
+            "Marqant\\MarqantPayGraphQL\\Tests\\": "tests/",
             "Marqant\\MarqantPayGraphQL\\": "src/"
         }
     },
