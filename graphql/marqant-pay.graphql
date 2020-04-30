@@ -1,0 +1,5 @@
+########################################################
+# Mutations
+extend type Mutation {
+    savePaymentMethodOnUser(email: String!, paymentMethod: String!): User!
+}
