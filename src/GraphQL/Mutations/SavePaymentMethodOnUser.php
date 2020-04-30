@@ -2,6 +2,7 @@
 
 namespace Marqant\MarqantPayGraphQL\GraphQL\Mutations;
 
+use App\User;
 use GraphQL\Type\Definition\ResolveInfo;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
@@ -26,6 +27,15 @@ class SavePaymentMethodOnUser
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        ddi('Save Payment Method on User Mutation');
+        /**
+         * @var \App\User $User
+         */
+        $email = $args['email'];
+        $payment_method = $args['paymentMethod'];
+
+        $User = User::where('email', $email)
+            ->firstOrFail();
+
+        return $User->savePaymentMethod($payment_method);
     }
 }
