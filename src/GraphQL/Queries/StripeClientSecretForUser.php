@@ -1,13 +1,13 @@
 <?php
 
-namespace Marqant\MarqantPayGraphQL\GraphQL\Mutations;
+namespace Marqant\MarqantPayGraphQL\GraphQL\Queries;
 
 use App\User;
 use GraphQL\Type\Definition\ResolveInfo;
-use Marqant\MarqantPay\Services\MarqantPay;
+use Marqant\MarqantPayStripe\StripePaymentGateway;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class SavePaymentMethodOnUser
+class StripeClientSecretForUser
 {
     /**
      * Return a value for the field.
@@ -25,22 +25,14 @@ class SavePaymentMethodOnUser
      *                                                                         more.
      *
      * @return mixed
-     * @throws \Exception
      */
     public function __invoke($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        /**
-         * @var \App\User $User
-         */
-
         $email = $args['email'];
-        $payment_method = $args['paymentMethod'];
 
         $User = User::where('email', $email)
             ->firstOrFail();
 
-        $PaymentMethod = MarqantPay::resolvePaymentMethod('card', ['token' => $payment_method]);
-
-        return $User->savePaymentMethod($PaymentMethod);
+        return StripePaymentGateway::createSetupIntent($User);
     }
 }
