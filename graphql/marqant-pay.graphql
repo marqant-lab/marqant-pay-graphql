@@ -1,5 +1,23 @@
 ########################################################
+# Types
+#type Payment {
+#    amount: Float!
+#    status: String!
+#}
+type ClientSecretResponse {
+    clientSecret: String! @rename(attribute: "client_secret")
+}
+
+########################################################
 # Mutations
 extend type Mutation {
     savePaymentMethodOnUser(email: String!, paymentMethod: String!): User!
+    #    chargeUser(email: String!, amount: Float!): Payment!
 }
+
+########################################################
+# Queries
+extend type Query {
+    stripeClientSecretForUser(email: String!): ClientSecretResponse!
+}
+

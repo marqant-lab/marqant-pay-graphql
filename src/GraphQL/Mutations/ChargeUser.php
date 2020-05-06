@@ -4,10 +4,9 @@ namespace Marqant\MarqantPayGraphQL\GraphQL\Mutations;
 
 use App\User;
 use GraphQL\Type\Definition\ResolveInfo;
-use Marqant\MarqantPay\Services\MarqantPay;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class SavePaymentMethodOnUser
+class ChargeUser
 {
     /**
      * Return a value for the field.
@@ -33,14 +32,18 @@ class SavePaymentMethodOnUser
          * @var \App\User $User
          */
 
+        // email and amount
         $email = $args['email'];
-        $payment_method = $args['paymentMethod'];
+        $amount = $args['amount'];
 
+        // transform amount from float to int
+        $amount = $amount * 100;
+
+        // get user
         $User = User::where('email', $email)
             ->firstOrFail();
 
-        $PaymentMethod = MarqantPay::resolvePaymentMethod('card', ['token' => $payment_method]);
-
-        return $User->savePaymentMethod($PaymentMethod);
+        // charge the user
+        return $User->charge($amount);
     }
 }
