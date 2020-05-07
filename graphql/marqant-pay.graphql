@@ -1,9 +1,10 @@
 ########################################################
 # Types
-#type Payment {
-#    amount: Float!
-#    status: String!
-#}
+type Payment {
+    provider: String!
+    amount: Float!
+    status: String!
+}
 type ClientSecretResponse {
     clientSecret: String! @rename(attribute: "client_secret")
 }
@@ -18,6 +19,9 @@ extend type Mutation {
 ########################################################
 # Queries
 extend type Query {
+    userPayments(email: String!): [Payment!]!
+
+    # marqant-lab/marqant-pay-stripe
     stripeClientSecretForUser(email: String!): ClientSecretResponse!
 }
 
