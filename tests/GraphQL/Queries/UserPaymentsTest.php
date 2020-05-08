@@ -19,13 +19,18 @@ class UserPaymentsTest extends MarqantPayGraphQLTestCase
          * @var \App\User $User
          */
 
+        // Update config so we have the marqant-pay.invoice_service
+        // setting set to the PdfInvoice service
+        $PdfInvoiceService = \Marqant\MarqantPayInvoices\Services\PdfInvoice::class;
+        config(['marqant-pay.invoice_service' => $PdfInvoiceService]);
+
         $amount = 999; // 9,99 ($|€|...)
 
         // create fake customer through factory
         $User = $this->createBillableUser();
 
         // charge the user
-        $Payment = $User->charge($amount);
+        $Payment = $User->charge($amount, 'test_get_list_of_payments');
 
         // check that we got back an instance of Payment
         $this->assertInstanceOf(config('marqant-pay.payment_model'), $Payment);
@@ -36,6 +41,9 @@ class UserPaymentsTest extends MarqantPayGraphQLTestCase
         // check if we billed the correct user
         $this->assertEquals($User->provider_id, $Payment->customer);
 
+        // create invoice on payment
+        $Payment->createInvoice();
+
         // now fire the graphql query and check if we
         // have access to this payment through grpahql
         $response = $this->graphQL(/** @lang GraphQL */ '
@@ -44,6 +52,8 @@ query payments($email: String!) {
         status
         provider
         amount
+        nr
+        invoice
     }
 }
         ', [

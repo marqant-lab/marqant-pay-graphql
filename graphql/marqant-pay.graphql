@@ -4,6 +4,8 @@ type Payment {
     provider: String!
     amount: Float!
     status: String!
+    nr: String! @rename(attribute: "invoice_nr")
+    invoice: String!
 }
 type ClientSecretResponse {
     clientSecret: String! @rename(attribute: "client_secret")
